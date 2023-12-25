@@ -10,7 +10,7 @@ namespace tela
             {
                 for (int j = 0; j < tab.Colunas; j++)
                 {
-                    Console.Write(tab._pecas[i, j] != null ? $"{tab._pecas[i, j]} " : "- ");
+                    Console.Write(tab.Peca(i, j) != null ? $"{tab.Peca(i, j)} " : "- ");
                 }
                 Console.WriteLine();
             }
