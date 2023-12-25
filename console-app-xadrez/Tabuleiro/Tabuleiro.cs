@@ -17,5 +17,11 @@
             Colunas = tamanho;
             _pecas = new Peca[Linhas, Colunas];
         }
+
+        public void ColocarPeca(Peca peca, Posicao posicao)
+        {
+            _pecas[posicao.Linha, posicao.Coluna] = peca;
+            peca.Posicao = posicao;
+        }
     }
 }
