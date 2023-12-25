@@ -1,3 +1,3 @@
 ﻿using Tabuleiro;
 
-Posicao posicao = new Posicao(3, 4);
+Tabuleiro.Tabuleiro tab = new(3, 4);
