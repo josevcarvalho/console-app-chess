@@ -1,4 +1,4 @@
-﻿namespace Tabuleiro
+﻿namespace tabuleiro
 {
     internal class Peca(Posicao posicao, Cor cor, Tabuleiro tabuleiro)
     {

@@ -1,3 +1,6 @@
-﻿using Tabuleiro;
+﻿using tabuleiro;
+using tela;
 
-Tabuleiro.Tabuleiro tab = new(3, 4);
+Tabuleiro tab = new(8);
+Tela.ImprimirTabuleiro(tab);
+Console.ReadLine();
