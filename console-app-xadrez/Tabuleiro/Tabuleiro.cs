@@ -4,7 +4,7 @@
     {
         public int Linhas { get; set; }
         public int Colunas { get; set; }
-        private readonly Peca[,] _pecas;
+        public readonly Peca[,] _pecas;
 
         public Tabuleiro(int linhas, int colunas)
         {
@@ -46,5 +46,6 @@
 
         public Peca Peca(Posicao pos) =>
             _pecas[pos.Linha, pos.Coluna];
+
     }
 }
