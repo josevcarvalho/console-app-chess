@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using tabuleiro;
+using xadrez;
 
 namespace tela
 {
@@ -28,7 +29,7 @@ namespace tela
 
         private static void ImprimirColunas(int colunas)
         {
-            Console.Write($"  {string.Concat(Enumerable.Range('a', colunas).Select(c => $"{(char)c} "))}");
+            Console.WriteLine($"  {string.Concat(Enumerable.Range('a', colunas).Select(c => $"{(char)c} "))}");
         }
 
         public static void ImprimirPeca(Peca peca)
@@ -42,7 +43,15 @@ namespace tela
                 Console.Write(peca);
                 Console.ForegroundColor = originalForegroundColor;
             }
-        } 
+        }
+
+        public static PosicaoXadrez LerPosicaoXadrez()
+        {
+            string s = Console.ReadLine();
+            char coluna = s[0];
+            int linha = int.Parse($"{s[1]}");
+            return new PosicaoXadrez(coluna, linha);
+        }
 
     }
 }

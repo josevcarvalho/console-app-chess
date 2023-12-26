@@ -4,7 +4,7 @@
     {
         public int Linhas { get; set; }
         public int Colunas { get; set; }
-        public readonly Peca[,] _pecas;
+        public readonly Peca?[,] _pecas;
 
         public Tabuleiro(int linhas, int colunas)
         {
@@ -27,8 +27,22 @@
             peca.Posicao = pos;
         }
 
-        public bool PosicaoValida(Posicao pos) =>
-            pos.Linha >= 0 && pos.Linha < Linhas && pos.Coluna >= 0 && pos.Coluna < Colunas;
+        public Peca? RetirarPeca(Posicao pos)
+        {
+            if (Peca(pos) == null)
+                return null;
+
+            Peca aux = Peca(pos);
+            aux.Posicao = null;
+            _pecas[pos.Linha, pos.Coluna] = null;
+            return aux;
+
+        }
+
+        public bool PosicaoValida(Posicao pos)
+        {
+            return pos.Linha >= 0 && pos.Linha < Linhas && pos.Coluna >= 0 && pos.Coluna < Colunas;
+        }
 
         public void ValidarPosicao(Posicao pos)
         {
@@ -41,8 +55,10 @@
             return Peca(pos) != null;
         }
 
-        public Peca Peca(int linha, int coluna) =>
-            _pecas[linha, coluna];
+        public Peca Peca(int linha, int coluna)
+        {
+            return _pecas[linha, coluna];
+        }
 
         public Peca Peca(Posicao pos) =>
             _pecas[pos.Linha, pos.Coluna];
