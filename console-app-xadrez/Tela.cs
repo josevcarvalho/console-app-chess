@@ -1,30 +1,34 @@
-﻿using System.Linq;
-using tabuleiro;
+﻿using tabuleiro;
 using xadrez;
 
 namespace tela
 {
     internal class Tela
     {
-        public static void ImprimirTabuleiro(Tabuleiro tab)
+        public static void ImprimirTabuleiro(Tabuleiro tab, bool[,]? posicoesPossiveis = null)
         {
+            posicoesPossiveis ??= new bool[tab.Linhas, tab.Colunas];
+
+            ConsoleColor fundoOriginal = Console.BackgroundColor;
+            ConsoleColor fundoAlterado = ConsoleColor.DarkGray;
+
             for (int i = 0; i < tab.Linhas; i++)
             {
                 Console.Write($"{8 - i} ");
                 for (int j = 0; j < tab.Colunas; j++)
                 {
-                    if (tab.Peca(i, j) == null)
-                        Console.Write("- ");
+                    if (posicoesPossiveis[i, j])
+                        Console.BackgroundColor = fundoAlterado;
                     else
-                    {
-                        ImprimirPeca(tab.Peca(i, j));
-                        Console.Write(" ");
-                    }
+                        Console.BackgroundColor = fundoOriginal;
+
+                    ImprimirPeca(tab.Peca(i, j));
                 }
                 Console.WriteLine();
             }
-
+            Console.BackgroundColor = fundoOriginal;
             ImprimirColunas(tab.Colunas);
+            Console.WriteLine();
         }
 
         private static void ImprimirColunas(int colunas)
@@ -34,6 +38,12 @@ namespace tela
 
         public static void ImprimirPeca(Peca peca)
         {
+            if (peca == null)
+            {
+                Console.Write("- ");
+                return;
+            }
+
             if (peca.Cor == Cor.Branca)
                 Console.Write(peca);
             else
@@ -43,6 +53,8 @@ namespace tela
                 Console.Write(peca);
                 Console.ForegroundColor = originalForegroundColor;
             }
+
+            Console.Write(" ");
         }
 
         public static PosicaoXadrez LerPosicaoXadrez()
