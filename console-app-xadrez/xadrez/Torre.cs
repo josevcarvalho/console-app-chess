@@ -19,6 +19,7 @@ namespace xadrez
             Posicao pos = new(0, 0);
 
             // Acima
+            #pragma warning disable CS8602 // Desreferência de uma referência possivelmente nula.
             pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna);
             while (Tab.PosicaoValida(pos) && PodeMover(pos))
             {
@@ -61,6 +62,7 @@ namespace xadrez
 
                 pos.Coluna--;
             }
+            #pragma warning restore CS8602 // Desreferência de uma referência possivelmente nula.
 
             return movs;
         }

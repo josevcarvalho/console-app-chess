@@ -4,10 +4,10 @@ namespace xadrez
 {
     internal class PartidaXadrez
     {
-        public readonly Tabuleiro Tab;
-        private int Turno;
-        private Cor JogadorAtual;
-        public bool Finalizada;
+        public Tabuleiro Tab { get; private set; }
+        public int Turno { get; private set; }
+        public Cor JogadorAtual { get; private set; }
+        public bool Finalizada { get; private set; }
 
         public PartidaXadrez()
         {
@@ -22,9 +22,45 @@ namespace xadrez
         {
             Peca? peca = Tab.RetirarPeca(origem);
             peca?.IncrementarQtdMovimentos();
-            Peca? pecaCapturada = Tab.RetirarPeca(destino);
+            _ = Tab.RetirarPeca(destino);
             Tab.ColocarPeca(peca, destino);
         }
+
+        public void RealizaJogada(Posicao origem, Posicao destino)
+        {
+            ExecutaMovimento(origem, destino);
+            Turno++;
+            AlteraJogador();
+        }
+
+        public void ValidarPosicaoDeOrigem(Posicao pos)
+        {
+            Peca pecaEscolhida = Tab.Peca(pos) ??
+                throw new TabuleiroException("Não existe peça na posição de origem escolhida!");
+
+            if (JogadorAtual != pecaEscolhida.Cor)
+                throw new TabuleiroException("A peça de origem escolhida não é sua");
+
+            if (!pecaEscolhida.ExisteMovimentosPossiveis())
+                throw new TabuleiroException("Não há movimentos possíveis para a peça de origem");
+            
+        }
+
+        public void ValidarPosicaoDeDestino(Posicao origem, Posicao destino)
+        {
+            #pragma warning disable CS8602 // Desreferência de uma referência possivelmente nula.
+            if (!Tab.Peca(origem).PodeMoverPara(destino))
+            {
+                throw new TabuleiroException("Posica de destino invalida");
+            }
+            #pragma warning restore CS8602 // Desreferência de uma referência possivelmente nula.
+        }
+
+        private void AlteraJogador()
+        {
+            JogadorAtual = (JogadorAtual == Cor.Branca) ? Cor.Preta : Cor.Branca;
+        }
+
 
         private void ColocarPecas()
         {

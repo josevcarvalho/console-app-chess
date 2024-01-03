@@ -4,7 +4,7 @@
     {
         public int Linhas { get; set; }
         public int Colunas { get; set; }
-        public readonly Peca?[,] _pecas;
+        public Peca?[,] _pecas { get; private set; }
 
         public Tabuleiro(int linhas, int colunas)
         {
@@ -32,8 +32,10 @@
             if (Peca(pos) == null)
                 return null;
 
-            Peca aux = Peca(pos);
+            Peca? aux = Peca(pos);
+            #pragma warning disable CS8602 // Desreferência de uma referência possivelmente nula.
             aux.Posicao = null;
+            #pragma warning restore CS8602 // Desreferência de uma referência possivelmente nula.
             _pecas[pos.Linha, pos.Coluna] = null;
             return aux;
 
@@ -55,12 +57,12 @@
             return Peca(pos) != null;
         }
 
-        public Peca Peca(int linha, int coluna)
+        public Peca? Peca(int linha, int coluna)
         {
             return _pecas[linha, coluna];
         }
 
-        public Peca Peca(Posicao pos) =>
+        public Peca? Peca(Posicao pos) =>
             _pecas[pos.Linha, pos.Coluna];
 
     }

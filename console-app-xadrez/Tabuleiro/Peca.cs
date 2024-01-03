@@ -12,6 +12,28 @@
             QtdMovimentos++;
         }
 
+        public bool ExisteMovimentosPossiveis()
+        {
+            bool[,] movs = MovimentosPossiveis();
+            for (int i = 0; i < Tab.Linhas; i++)
+            {
+                for (int j = 0 ; j < Tab.Colunas; j++)
+                {
+                    if (movs[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool PodeMoverPara(Posicao pos)
+        {
+            return MovimentosPossiveis()[pos.Linha, pos.Coluna];
+        }
+
         public abstract bool[,] MovimentosPossiveis();
     }
 }

@@ -8,7 +8,7 @@ namespace xadrez
 
         private bool PodeMover(Posicao pos)
         {
-            Peca peca = Tab.Peca(pos);
+            Peca? peca = Tab.Peca(pos);
             return peca == null || peca.Cor != this.Cor;
         }
 
@@ -16,10 +16,12 @@ namespace xadrez
         {
             bool[,] movs = new bool[Tab.Linhas, Tab.Colunas];
 
-            Posicao pos = new Posicao(0, 0);
+            Posicao pos = new(0, 0);
 
             // Acima
+            #pragma warning disable CS8602 // Desreferência de uma referência possivelmente nula.
             pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna);
+            #pragma warning restore CS8602 // Desreferência de uma referência possivelmente nula.
             if (Tab.PosicaoValida(pos) && PodeMover(pos))
                 movs[pos.Linha, pos.Coluna] = true;
 
