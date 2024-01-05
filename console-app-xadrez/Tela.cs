@@ -1,10 +1,42 @@
-﻿using tabuleiro;
+﻿using System.Net.NetworkInformation;
+using tabuleiro;
 using xadrez;
 
 namespace tela
 {
     internal class Tela
     {
+        public static void ImprimirPartida(PartidaXadrez partida)
+        {
+            ImprimirTabuleiro(partida.Tab);
+            ImprimirPecasCapturadas(partida);
+            Console.WriteLine($"Turno: {partida.Turno}");
+            Console.WriteLine($"Aguardando jogada: {partida.JogadorAtual}");
+            if (partida.Xeque)
+            {
+                Console.WriteLine("XEQUE!");
+            }
+        }
+
+        public static void ImprimirPecasCapturadas(PartidaXadrez partida)
+        {
+            Console.WriteLine("Peças capturadas:");
+            Console.Write("Brancas: ");
+            ImprimirConjunto(partida.PecasCapturadas(Cor.Branca));
+            ConsoleColor originalConsoleColor = Console.ForegroundColor;
+            Console.Write("Pretas: ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            ImprimirConjunto(partida.PecasCapturadas(Cor.Preta));
+            Console.ForegroundColor = originalConsoleColor;
+            Console.WriteLine();
+        }
+
+        public static void ImprimirConjunto(HashSet<Peca> conjunto)
+        {
+            Console.WriteLine($"[{string.Join(" ", conjunto)}]");
+        }
+
+
         public static void ImprimirTabuleiro(Tabuleiro tab, bool[,]? posicoesPossiveis = null)
         {
             posicoesPossiveis ??= new bool[tab.Linhas, tab.Colunas];
@@ -36,7 +68,7 @@ namespace tela
             Console.WriteLine($"  {string.Concat(Enumerable.Range('a', colunas).Select(c => $"{(char)c} "))}");
         }
 
-        public static void ImprimirPeca(Peca peca)
+        public static void ImprimirPeca(Peca? peca)
         {
             if (peca == null)
             {
