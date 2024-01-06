@@ -2,14 +2,17 @@
 
 namespace xadrez
 {
-    internal class Torre(Cor cor, Tabuleiro tab) : Peca(cor, tab)
+    internal class Dama(Cor cor, Tabuleiro tab) : Peca(cor , tab)
     {
-        public override string ToString() => "T";
+        public override string ToString()
+        {
+            return "D";
+        }
 
         private bool PodeMover(Posicao pos)
         {
-            Peca? peca = Tab.Peca(pos);
-            return peca == null || peca.Cor != this.Cor;
+            Peca? p = Tab.Peca(pos);
+            return p == null || p.Cor != Cor;
         }
 
         public override bool[,] MovimentosPossiveis()
@@ -62,6 +65,50 @@ namespace xadrez
                     break;
 
                 pos.Coluna--;
+            }
+
+            // NO
+            pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna - 1);
+            while (Tab.PosicaoValida(pos) && PodeMover(pos))
+            {
+                movs[pos.Linha, pos.Coluna] = true;
+                if (Tab.Peca(pos) != null && Tab.Peca(pos)!.Cor != Cor)
+                    break;
+
+                pos.DefinirValores(pos.Linha - 1, pos.Coluna - 1);
+            }
+
+            // NE
+            pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna + 1);
+            while (Tab.PosicaoValida(pos) && PodeMover(pos))
+            {
+                movs[pos.Linha, pos.Coluna] = true;
+                if (Tab.Peca(pos) != null && Tab.Peca(pos)!.Cor != Cor)
+                    break;
+
+                pos.DefinirValores(pos.Linha - 1, pos.Coluna + 1);
+            }
+
+            // SE
+            pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna + 1);
+            while (Tab.PosicaoValida(pos) && PodeMover(pos))
+            {
+                movs[pos.Linha, pos.Coluna] = true;
+                if (Tab.Peca(pos) != null && Tab.Peca(pos)!.Cor != Cor)
+                    break;
+
+                pos.DefinirValores(pos.Linha + 1, pos.Coluna + 1);
+            }
+
+            // SO
+            pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna - 1);
+            while (Tab.PosicaoValida(pos) && PodeMover(pos))
+            {
+                movs[pos.Linha, pos.Coluna] = true;
+                if (Tab.Peca(pos) != null && Tab.Peca(pos)!.Cor != Cor)
+                    break;
+
+                pos.DefinirValores(pos.Linha - 1, pos.Coluna - 1);
             }
 
             return movs;

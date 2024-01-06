@@ -18,9 +18,7 @@ try
             Posicao origem = Tela.LerPosicaoXadrez().ToPosicao();
             partida.ValidarPosicaoDeOrigem(origem);
 
-            #pragma warning disable CS8602 // Desreferência de uma referência possivelmente nula.
-            bool[,] movimentosPossiveis = partida.Tab.Peca(origem).MovimentosPossiveis();
-            #pragma warning restore CS8602 // Desreferência de uma referência possivelmente nula.
+            bool[,] movimentosPossiveis = partida.Tab.Peca(origem)!.MovimentosPossiveis();
 
             Console.Clear();
             Tela.ImprimirTabuleiro(partida.Tab, movimentosPossiveis);
@@ -37,9 +35,13 @@ try
             Console.ReadLine();
         }
     }
-    
-    Console.ReadLine();
+
+    Console.Clear();
+    Tela.ImprimirPartida(partida);
+
 } catch (TabuleiroException e)
 {
     Console.WriteLine(e.Message);
 }
+
+Console.ReadLine();

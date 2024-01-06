@@ -11,10 +11,18 @@ namespace tela
             ImprimirTabuleiro(partida.Tab);
             ImprimirPecasCapturadas(partida);
             Console.WriteLine($"Turno: {partida.Turno}");
-            Console.WriteLine($"Aguardando jogada: {partida.JogadorAtual}");
-            if (partida.Xeque)
+            if (!partida.Finalizada)
             {
-                Console.WriteLine("XEQUE!");
+                Console.WriteLine($"Aguardando jogada: {partida.JogadorAtual}");
+                if (partida.Xeque)
+                {
+                    Console.WriteLine("XEQUE!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("XEQUEMATE");
+                Console.WriteLine($"Vencedor {partida.JogadorAtual}");
             }
         }
 
@@ -55,10 +63,10 @@ namespace tela
                         Console.BackgroundColor = fundoOriginal;
 
                     ImprimirPeca(tab.Peca(i, j));
+                    Console.BackgroundColor = fundoOriginal;
                 }
                 Console.WriteLine();
             }
-            Console.BackgroundColor = fundoOriginal;
             ImprimirColunas(tab.Colunas);
             Console.WriteLine();
         }
