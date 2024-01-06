@@ -124,6 +124,18 @@ namespace xadrez
                 throw new TabuleiroException("Você não pode se colocar em xeque!");
             }
 
+            Peca? p = Tab.Peca(destino);
+
+            // #JogadaEspecial Promocao
+            if (p is Peao && destino.Linha == ((p.Cor == Cor.Branca) ? 0 : 7))
+            {
+                p = Tab.RetirarPeca(destino);
+                _pecas.Remove(p);
+                Peca dama = new Dama(p.Cor, Tab);
+                PosicaoXadrez pos = destino.ToPosicaoXadrez();
+                ColocarNovaPeca(pos, dama);
+            }
+
             if (EstaEmXeque(Adversaria(JogadorAtual))) Xeque = true;
             else Xeque = false;
 
@@ -135,7 +147,6 @@ namespace xadrez
             }
 
             // #JogadaEspecial En Passant
-            Peca? p = Tab.Peca(destino);
             if (p is Peao && (destino.Linha == origem.Linha - 2 || destino.Linha == origem.Linha + 2))
                 VulneravelEnPassant = p;
             else VulneravelEnPassant = null;
@@ -221,7 +232,13 @@ namespace xadrez
             Tab.ColocarPeca(peca, new PosicaoXadrez(coluna, linha).ToPosicao());
             _pecas.Add(peca);
         }
-        
+
+        public void ColocarNovaPeca(PosicaoXadrez pos, Peca peca)
+        {
+            Tab.ColocarPeca(peca, new PosicaoXadrez(pos.Coluna, pos.Linha).ToPosicao());
+            _pecas.Add(peca);
+        }
+
         private void ColocarPecas()
         {
             ColocarNovaPeca('a', 1, new Torre(Cor.Branca, Tab));
@@ -248,7 +265,7 @@ namespace xadrez
             ColocarNovaPeca('e', 8, new Rei(Cor.Preta, Tab, this));
             ColocarNovaPeca('f', 8, new Bispo(Cor.Preta, Tab));
             ColocarNovaPeca('g', 8, new Cavalo(Cor.Preta, Tab));
-            ColocarNovaPeca('h', 8, new Peao(Cor.Preta, Tab, this));
+            ColocarNovaPeca('h', 8, new Torre(Cor.Preta, Tab));
             ColocarNovaPeca('a', 7, new Peao(Cor.Preta, Tab, this));
             ColocarNovaPeca('b', 7, new Peao(Cor.Preta, Tab, this));
             ColocarNovaPeca('c', 7, new Peao(Cor.Preta, Tab, this));
