@@ -2,8 +2,9 @@
 
 namespace xadrez
 {
-    internal class Peao(Cor cor, Tabuleiro tab) : Peca(cor, tab)
+    internal class Peao(Cor cor, Tabuleiro tab, PartidaXadrez partida) : Peca(cor, tab)
     {
+        private PartidaXadrez _partida = partida;
         public override string ToString()
         {
             return "P";
@@ -41,6 +42,19 @@ namespace xadrez
 
             pos.DefinirValores(Posicao.Linha + direcao, Posicao.Coluna + 1);
             if (Tab.PosicaoValida(pos) && ExisteInimigo(pos)) movs[pos.Linha, pos.Coluna] = true;
+
+            // #JogadaEspecial En Passant
+            int linhaEnPassant = (Cor == Cor.Branca) ? 3 : 4;
+            if (Posicao.Linha == linhaEnPassant)
+            {
+                Posicao esquerda = new(Posicao.Linha, Posicao.Coluna - 1);
+                if (Tab.PosicaoValida(esquerda) && ExisteInimigo(esquerda) && Tab.Peca(esquerda) == _partida.VulneravelEnPassant)
+                    movs[esquerda.Linha + direcao, esquerda.Coluna] = true;
+
+                Posicao direita = new(Posicao.Linha, Posicao.Coluna + 1);
+                if (Tab.PosicaoValida(direita) && ExisteInimigo(direita) && Tab.Peca(direita) == _partida.VulneravelEnPassant)
+                    movs[direita.Linha + direcao, direita.Coluna] = true;
+            }
 
             return movs;
         }

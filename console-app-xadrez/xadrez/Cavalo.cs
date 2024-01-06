@@ -21,39 +21,39 @@ namespace xadrez
 
             if (Posicao == null) return movs;
 
-            Posicao pos = new Posicao(0, 0);
+            Posicao pos = new(0, 0);
 
             pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna - 2);
             if (Tab.PosicaoValida(pos) && PodeMover(pos))
-                movs[pos.Linha - 1, pos.Coluna] = true;
+                movs[pos.Linha, pos.Coluna] = true;
 
             pos.DefinirValores(Posicao.Linha - 2, Posicao.Coluna - 1);
             if (Tab.PosicaoValida(pos) && PodeMover(pos))
-                movs[pos.Linha - 1, pos.Coluna] = true;
+                movs[pos.Linha, pos.Coluna] = true;
 
             pos.DefinirValores(Posicao.Linha - 2, Posicao.Coluna + 1);
             if (Tab.PosicaoValida(pos) && PodeMover(pos))
-                movs[pos.Linha - 1, pos.Coluna] = true;
+                movs[pos.Linha, pos.Coluna] = true;
 
             pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna + 2);
             if (Tab.PosicaoValida(pos) && PodeMover(pos))
-                movs[pos.Linha - 1, pos.Coluna] = true;
+                movs[pos.Linha, pos.Coluna] = true;
 
             pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna + 2);
             if (Tab.PosicaoValida(pos) && PodeMover(pos))
-                movs[pos.Linha - 1, pos.Coluna] = true;
+                movs[pos.Linha, pos.Coluna] = true;
 
             pos.DefinirValores(Posicao.Linha + 2, Posicao.Coluna + 1);
             if (Tab.PosicaoValida(pos) && PodeMover(pos))
-                movs[pos.Linha - 1, pos.Coluna] = true;
+                movs[pos.Linha, pos.Coluna] = true;
 
             pos.DefinirValores(Posicao.Linha + 2,  Posicao.Coluna - 1);
             if (Tab.PosicaoValida(pos) && PodeMover(pos))
-                movs[pos.Linha - 1, pos.Coluna] = true;
+                movs[pos.Linha, pos.Coluna] = true;
 
             pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna - 2);
             if (Tab.PosicaoValida(pos) && PodeMover(pos))
-                movs[pos.Linha - 1, pos.Coluna] = true;
+                movs[pos.Linha, pos.Coluna] = true;
 
             return movs;
         }
